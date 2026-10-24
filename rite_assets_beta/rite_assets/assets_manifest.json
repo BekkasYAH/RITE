@@ -1,0 +1,588 @@
+{
+ "grid": 16,
+ "perspective": "top-down 3/4, light from upper-left",
+ "assets": {
+  "characters/ghost/ghost_sheet.png": {
+   "size": [
+    128,
+    128
+   ],
+   "frame": [
+    32,
+    32
+   ],
+   "cols": 4,
+   "rows": [
+    "idle",
+    "move (faces right; flip X for left)",
+    "pursuit (faces right; flip X)",
+    "contained"
+   ],
+   "fps": 6,
+   "anchor": "centre",
+   "blend": "normal; semi-transparent body, add halo light for extra glow"
+  },
+  "characters/player/player_sheet.png": {
+   "size": [
+    96,
+    96
+   ],
+   "frame": [
+    16,
+    24
+   ],
+   "cols": 6,
+   "rows": [
+    "down",
+    "left",
+    "right",
+    "up"
+   ],
+   "columns": [
+    "idle0",
+    "idle1",
+    "walk0",
+    "walk1",
+    "walk2",
+    "walk3"
+   ],
+   "fps": {
+    "idle": 2,
+    "walk": 8
+   },
+   "anchor": "feet-centre (x=8,y=21)"
+  },
+  "environment/autotile_cobble.png": {
+   "size": [
+    64,
+    64
+   ],
+   "grid": 16,
+   "layout": "4x4, index = N1+E2+S4+W8; index 15 = full interior",
+   "overlay": true
+  },
+  "environment/autotile_dirt_road.png": {
+   "size": [
+    64,
+    64
+   ],
+   "grid": 16,
+   "layout": "4x4, index = N1+E2+S4+W8 (neighbours with road)",
+   "overlay": true
+  },
+  "environment/autotile_iron_fence_cemetery.png": {
+   "size": [
+    64,
+    64
+   ],
+   "grid": 16,
+   "layout": "4x4, index = N1+E2+S4+W8",
+   "overlay": true
+  },
+  "environment/autotile_stone_wall_top.png": {
+   "size": [
+    64,
+    64
+   ],
+   "grid": 16,
+   "layout": "4x4, index = N1+E2+S4+W8",
+   "overlay": true
+  },
+  "environment/autotile_water_f0.png": {
+   "size": [
+    64,
+    64
+   ],
+   "grid": 16,
+   "layout": "4x4, index = N1+E2+S4+W8; index 15 = open water. f0/f1 alternate @ ~2 fps",
+   "overlay": true
+  },
+  "environment/autotile_water_f1.png": {
+   "size": [
+    64,
+    64
+   ],
+   "grid": 16,
+   "layout": "4x4, index = N1+E2+S4+W8; index 15 = open water. f0/f1 alternate @ ~2 fps",
+   "overlay": true
+  },
+  "environment/autotile_wood_fence.png": {
+   "size": [
+    64,
+    64
+   ],
+   "grid": 16,
+   "layout": "4x4, index = N1+E2+S4+W8",
+   "overlay": true
+  },
+  "environment/ground_base.png": {
+   "size": [
+    96,
+    16
+   ],
+   "grid": 16,
+   "cols": 6,
+   "order": [
+    "grass_a",
+    "grass_b",
+    "grass_c",
+    "dirt_a",
+    "dirt_b",
+    "cobble"
+   ],
+   "note": "seamless 16x16 tiles; use grass_* as the base layer"
+  },
+  "environment/wall_front_face.png": {
+   "size": [
+    16,
+    16
+   ],
+   "grid": 16,
+   "note": "place directly below horizontal wall_top runs"
+  },
+  "landmarks/chapel/chapel.png": {
+   "size": [
+    64,
+    96
+   ],
+   "grid": 16,
+   "size_tiles": [
+    4,
+    6
+   ],
+   "anchor": "bottom-left; door centred at x=32; bottom 2 tile rows collide"
+  },
+  "landmarks/house/chimney.png": {
+   "size": [
+    16,
+    24
+   ],
+   "note": "overlay on roof; place at house x+64, y-8"
+  },
+  "landmarks/house/house_assembled.png": {
+   "size": [
+    96,
+    80
+   ],
+   "grid": 16,
+   "size_tiles": [
+    6,
+    5
+   ],
+   "anchor": "bottom-left tile origin; door at tile column 3; footprint = bottom 2 rows (collide), roof rows draw above player"
+  },
+  "landmarks/house/house_modules.png": {
+   "size": [
+    128,
+    32
+   ],
+   "grid": 16,
+   "cols": 8,
+   "order": [
+    "roof_tl",
+    "roof_t",
+    "roof_tr",
+    "roof_l",
+    "roof_c",
+    "roof_r",
+    "roof_bl",
+    "roof_b",
+    "roof_br",
+    "roof_c_damaged",
+    "wall_up_plain",
+    "wall_up_window_broken",
+    "wall_up_window_boarded",
+    "wall_up_door",
+    "wall_low_plain",
+    "wall_low_door"
+   ],
+   "note": "16x16 modules; roof rows sit above 2 wall rows"
+  },
+  "landmarks/trees/tree_dead.png": {
+   "size": [
+    32,
+    48
+   ],
+   "grid": 16,
+   "size_tiles": [
+    2,
+    3
+   ],
+   "anchor": "trunk base at bottom-centre (x=16,y=45)"
+  },
+  "landmarks/trees/tree_pine.png": {
+   "size": [
+    32,
+    48
+   ],
+   "grid": 16,
+   "size_tiles": [
+    2,
+    3
+   ],
+   "anchor": "trunk base at bottom-centre (x=16,y=45)"
+  },
+  "landmarks/well.png": {
+   "size": [
+    32,
+    32
+   ],
+   "grid": 16,
+   "size_tiles": [
+    2,
+    2
+   ],
+   "anchor": "bottom-center; collide on lower ring (y>=8)"
+  },
+  "props/abandoned_objects.png": {
+   "size": [
+    96,
+    16
+   ],
+   "frame": [
+    16,
+    16
+   ],
+   "cols": 6,
+   "order": [
+    "bucket",
+    "wheel",
+    "bones",
+    "sack",
+    "doll",
+    "candle"
+   ]
+  },
+  "props/barrels.png": {
+   "size": [
+    48,
+    16
+   ],
+   "frame": [
+    16,
+    16
+   ],
+   "cols": 3,
+   "order": [
+    "barrel",
+    "barrel_open",
+    "barrel_fallen"
+   ]
+  },
+  "props/crates.png": {
+   "size": [
+    48,
+    16
+   ],
+   "frame": [
+    16,
+    16
+   ],
+   "cols": 3,
+   "order": [
+    "crate",
+    "crate_open",
+    "crate_broken"
+   ]
+  },
+  "props/grave_markers.png": {
+   "size": [
+    48,
+    24
+   ],
+   "frame": [
+    16,
+    24
+   ],
+   "cols": 3,
+   "order": [
+    "grave_cross",
+    "grave_headstone",
+    "grave_mound"
+   ],
+   "anchor": "bottom-centre"
+  },
+  "props/lantern.png": {
+   "size": [
+    80,
+    16
+   ],
+   "frame": [
+    16,
+    16
+   ],
+   "cols": 5,
+   "order": [
+    "unlit",
+    "lit0",
+    "lit1",
+    "lit2",
+    "lit3"
+   ],
+   "fps": 6,
+   "note": "place light_glow_amber.png under the lit lantern"
+  },
+  "props/light_glow_amber.png": {
+   "size": [
+    96,
+    96
+   ],
+   "note": "96x96 radial light; use additive blend / light mask; tint in engine"
+  },
+  "ritual/chalk_strokes.png": {
+   "size": [
+    64,
+    48
+   ],
+   "grid": 16,
+   "cols": 4,
+   "order": [
+    "dab_a",
+    "dab_b",
+    "dab_c",
+    "seg_h",
+    "seg_v",
+    "seg_diag_backslash",
+    "seg_diag_slash",
+    "arc_nw",
+    "arc_ne",
+    "arc_se",
+    "arc_sw",
+    "smudge_faded"
+   ],
+   "note": "stamp dabs along freehand input; seg_/arc_ connect at edge midpoints (x or y = 8)"
+  },
+  "ritual/containment_circle_active.png": {
+   "size": [
+    384,
+    96
+   ],
+   "frame": [
+    96,
+    96
+   ],
+   "cols": 4,
+   "fps": 6,
+   "note": "overlay when ritual is channelling; blend normal or additive"
+  },
+  "ritual/containment_circle_chalk.png": {
+   "size": [
+    96,
+    96
+   ],
+   "centre": [
+    48,
+    48
+   ],
+   "nail_points_px": [
+    [
+     48,
+     15
+    ],
+    [
+     79,
+     38
+    ],
+    [
+     67,
+     75
+    ],
+    [
+     29,
+     75
+    ],
+    [
+     17,
+     38
+    ]
+   ],
+   "note": "5 iron nails anchor the star points; centre of image = ritual centre"
+  },
+  "ritual/containment_effect.png": {
+   "size": [
+    768,
+    96
+   ],
+   "frame": [
+    96,
+    96
+   ],
+   "cols": 8,
+   "fps": 10,
+   "loop": false,
+   "note": "one-shot: frames 0-5 converge, 6 flash, 7 settled seal (hold or loop frame 7 with the contained ghost)"
+  },
+  "ritual/iron_nail.png": {
+   "size": [
+    96,
+    16
+   ],
+   "frame": [
+    16,
+    16
+   ],
+   "cols": 6,
+   "order": [
+    "placed",
+    "placed_glow0",
+    "placed_glow1",
+    "placed_glow2",
+    "placed_glow3",
+    "pickup_item"
+   ],
+   "note": "glow frames loop @ 6 fps while ritual is active"
+  },
+  "ritual/tether_snapped.png": {
+   "size": [
+    128,
+    16
+   ],
+   "frame": [
+    32,
+    16
+   ],
+   "cols": 4,
+   "fps": 12,
+   "loop": false,
+   "note": "one-shot at the midpoint of a broken tether (rotate to match)"
+  },
+  "ritual/tether_stable.png": {
+   "size": [
+    64,
+    8
+   ],
+   "frame": [
+    16,
+    8
+   ],
+   "cols": 4,
+   "fps": 10,
+   "note": "horizontal, tiles seamlessly along X; rotate to span nail->nail; origin = centre-left"
+  },
+  "ritual/tether_strained.png": {
+   "size": [
+    64,
+    8
+   ],
+   "frame": [
+    16,
+    8
+   ],
+   "cols": 4,
+   "fps": 14,
+   "note": "jittering amber strand; ends are aligned (y=3) so it tiles along X"
+  },
+  "ui/icons/icon_chalk.png": {
+   "size": [
+    16,
+    16
+   ],
+   "frame": [
+    16,
+    16
+   ]
+  },
+  "ui/icons/icon_grimoire.png": {
+   "size": [
+    16,
+    16
+   ],
+   "frame": [
+    16,
+    16
+   ]
+  },
+  "ui/icons/icon_iron_nail.png": {
+   "size": [
+    16,
+    16
+   ],
+   "frame": [
+    16,
+    16
+   ]
+  },
+  "ui/icons/icon_key.png": {
+   "size": [
+    16,
+    16
+   ],
+   "frame": [
+    16,
+    16
+   ]
+  },
+  "ui/icons/icon_lantern.png": {
+   "size": [
+    16,
+    16
+   ],
+   "frame": [
+    16,
+    16
+   ]
+  },
+  "ui/icons_sheet.png": {
+   "size": [
+    80,
+    16
+   ],
+   "frame": [
+    16,
+    16
+   ],
+   "cols": 5,
+   "order": [
+    "grimoire",
+    "chalk",
+    "iron_nail",
+    "lantern",
+    "key"
+   ]
+  },
+  "ui/stability_fill_critical.png": {
+   "size": [
+    60,
+    6
+   ],
+   "frame": [
+    60,
+    6
+   ],
+   "note": "crop width = stability%*60; stable >50%, strained 25-50%, critical <25%"
+  },
+  "ui/stability_fill_stable.png": {
+   "size": [
+    60,
+    6
+   ],
+   "frame": [
+    60,
+    6
+   ],
+   "note": "crop width = stability%*60; stable >50%, strained 25-50%, critical <25%"
+  },
+  "ui/stability_fill_strained.png": {
+   "size": [
+    60,
+    6
+   ],
+   "frame": [
+    60,
+    6
+   ],
+   "note": "crop width = stability%*60; stable >50%, strained 25-50%, critical <25%"
+  },
+  "ui/stability_frame.png": {
+   "size": [
+    64,
+    12
+   ],
+   "frame": [
+    64,
+    12
+   ],
+   "note": "draw fill at (2,3); fill area is 60x6"
+  }
+ }
+}

@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/spirit.gd" id="1_spirit"]
+[ext_resource type="Texture2D" path="res://assets/props/light_glow_amber.png" id="2_light"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ghost"]
+radius = 9.0
+
+[node name="Spirit" type="CharacterBody2D" groups=["spirit"]]
+texture_filter = 1
+z_index = 1
+y_sort_enabled = true
+collision_layer = 8
+collision_mask = 1
+script = ExtResource("1_spirit")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -12)
+shape = SubResource("CircleShape2D_ghost")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -16)
+
+[node name="GhostLight" type="PointLight2D" parent="."]
+position = Vector2(0, -14)
+color = Color(0.45, 0.75, 1, 1)
+energy = 1.1
+shadow_enabled = false
+texture = ExtResource("2_light")
+texture_scale = 2.0

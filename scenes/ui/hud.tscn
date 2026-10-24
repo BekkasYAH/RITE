@@ -1,0 +1,309 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_hud"]
+[ext_resource type="Texture2D" path="res://assets/ui/stability_frame.png" id="2_frame"]
+[ext_resource type="Texture2D" path="res://assets/ui/stability_fill_stable.png" id="3_fill"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/icon_grimoire.png" id="4_icon_grim"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/icon_chalk.png" id="5_icon_chalk"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/icon_iron_nail.png" id="6_icon_nail"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/icon_lantern.png" id="7_icon_lant"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="TopLeft" type="HBoxContainer" parent="."]
+texture_filter = 1
+offset_left = 10.0
+offset_top = 8.0
+offset_right = 160.0
+offset_bottom = 26.0
+theme_override_constants/separation = 6
+
+[node name="GrimoireIcon" type="TextureRect" parent="TopLeft"]
+texture_filter = 1
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("4_icon_grim")
+stretch_mode = 3
+
+[node name="ChalkIcon" type="TextureRect" parent="TopLeft"]
+texture_filter = 1
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("5_icon_chalk")
+stretch_mode = 3
+
+[node name="NailIcon" type="TextureRect" parent="TopLeft"]
+texture_filter = 1
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("6_icon_nail")
+stretch_mode = 3
+
+[node name="LanternIcon" type="TextureRect" parent="TopLeft"]
+texture_filter = 1
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("7_icon_lant")
+stretch_mode = 3
+
+[node name="HealthLabel" type="Label" parent="TopLeft"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Sanity: 100%"
+
+[node name="ObjectivePanel" type="PanelContainer" parent="."]
+texture_filter = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -170.0
+offset_top = 6.0
+offset_right = 170.0
+offset_bottom = 28.0
+grow_horizontal = 2
+
+[node name="ObjectiveLabel" type="Label" parent="ObjectivePanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.85, 0.7, 1)
+theme_override_font_sizes/font_size = 10
+text = "Explore the cursed village. Prepare a containment circle."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StabilityBar" type="Control" parent="."]
+texture_filter = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -52.0
+offset_right = 60.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="StabilityText" type="Label" parent="StabilityBar"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = -14.0
+offset_right = 80.0
+offset_bottom = 0.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 9
+text = "TETHER: STABLE (100%)"
+horizontal_alignment = 1
+
+[node name="Frame" type="TextureRect" parent="StabilityBar"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -6.0
+offset_right = 32.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_frame")
+stretch_mode = 3
+
+[node name="StabilityFill" type="TextureRect" parent="StabilityBar"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 30.0
+offset_top = 12.0
+offset_right = 90.0
+offset_bottom = 18.0
+texture = ExtResource("3_fill")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="BottomBar" type="PanelContainer" parent="."]
+texture_filter = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="RitualModeIndicator" type="Label" parent="BottomBar"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.75, 0.75, 1)
+theme_override_font_sizes/font_size = 9
+text = "[SPACE] Ritual Mode | [F] Place Nail | [E] Interact | [TAB] Grimoire"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StunIndicator" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -30.0
+offset_right = 120.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.25, 0.25, 1)
+theme_override_font_sizes/font_size = 13
+text = "! TETHER RUPTURED - STUNNED !"
+horizontal_alignment = 1
+
+[node name="GrimoireDialog" type="PanelContainer" parent="."]
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -100.0
+offset_right = 160.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="GrimoireDialog"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="GrimoireDialog/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="GrimoireDialog/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.85, 0.5, 1)
+theme_override_font_sizes/font_size = 12
+text = "FATHER'S GRIMOIRE — RITUAL OF CONTAINMENT"
+horizontal_alignment = 1
+
+[node name="Body" type="Label" parent="GrimoireDialog/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
+theme_override_font_sizes/font_size = 9
+text = "1. CHALK: Press SPACE to enter Ritual Mode. Click and drag to draw a closed circular seal upon the village ground.
+2. IRON NAIL: Approach the drawn circle and press F to drive the consecrated nail, anchoring the ritual.
+3. THE TETHER: An ethereal bond links you to the anchor.
+   - Stay within range to keep the tether STABLE.
+   - Straying too far strains the bond.
+   - If stretched beyond limit, it SNAPS in a concussive shockwave, leaving you stunned and the spirit free!
+4. CONTAINMENT: Lure the cursed entity into the active circle. Hold the bond steady until the runes permanently seal it."
+autowrap_mode = 2
+
+[node name="ClosePrompt" type="Label" parent="GrimoireDialog/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 9
+text = "[Press TAB or ESC to close]"
+horizontal_alignment = 1
+
+[node name="WinPanel" type="PanelContainer" parent="."]
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -65.0
+offset_right = 140.0
+offset_bottom = 65.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="WinPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="WinPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="WinTitle" type="Label" parent="WinPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 1, 0.6, 1)
+theme_override_font_sizes/font_size = 14
+text = "RITUAL COMPLETED"
+horizontal_alignment = 1
+
+[node name="WinDesc" type="Label" parent="WinPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_font_sizes/font_size = 9
+text = "The ancient seal converged. The malevolent spirit is bound forever within the sacred geometry of your father's grimoire."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="RestartLabel" type="Label" parent="WinPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 10
+text = "[Press R to Restart]"
+horizontal_alignment = 1
+
+[node name="GameOverPanel" type="PanelContainer" parent="."]
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -130.0
+offset_top = -55.0
+offset_right = 130.0
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="GameOverPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="GameOverPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="GameOverTitle" type="Label" parent="GameOverPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.25, 0.25, 1)
+theme_override_font_sizes/font_size = 14
+text = "SANITY CONSUMED"
+horizontal_alignment = 1
+
+[node name="GameOverDesc" type="Label" parent="GameOverPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
+theme_override_font_sizes/font_size = 9
+text = "The spirit overtook you in the cursed dark. Your ritual remains unfinished."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="RestartLabel" type="Label" parent="GameOverPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 10
+text = "[Press R to Restart]"
+horizontal_alignment = 1

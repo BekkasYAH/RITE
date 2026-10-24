@@ -1,0 +1,773 @@
+[gd_scene load_steps=22 format=3]
+
+[ext_resource type="Script" path="res://scripts/village_ground.gd" id="1_ground"]
+[ext_resource type="Texture2D" path="res://assets/props/light_glow_amber.png" id="2_glow"]
+[ext_resource type="Texture2D" path="res://assets/landmarks/chapel/chapel.png" id="3_chapel"]
+[ext_resource type="Texture2D" path="res://assets/landmarks/house/house_assembled.png" id="4_house"]
+[ext_resource type="Texture2D" path="res://assets/landmarks/house/chimney.png" id="5_chimney"]
+[ext_resource type="Texture2D" path="res://assets/landmarks/well.png" id="6_well"]
+[ext_resource type="Texture2D" path="res://assets/landmarks/trees/tree_pine.png" id="7_tree_pine"]
+[ext_resource type="Texture2D" path="res://assets/landmarks/trees/tree_dead.png" id="8_tree_dead"]
+[ext_resource type="Texture2D" path="res://assets/props/barrels.png" id="9_barrels"]
+[ext_resource type="Texture2D" path="res://assets/props/crates.png" id="10_crates"]
+[ext_resource type="Texture2D" path="res://assets/props/grave_markers.png" id="11_graves"]
+[ext_resource type="Texture2D" path="res://assets/props/abandoned_objects.png" id="12_props"]
+[ext_resource type="Texture2D" path="res://assets/props/lantern.png" id="13_lantern"]
+[ext_resource type="Texture2D" path="res://assets/environment/autotile_iron_fence_cemetery.png" id="14_iron_fence"]
+
+[sub_resource type="RectangleShape2D" id="Rect_house_footprint"]
+size = Vector2(88, 28)
+
+[sub_resource type="RectangleShape2D" id="Rect_chapel_footprint"]
+size = Vector2(58, 28)
+
+[sub_resource type="CircleShape2D" id="Circle_well"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="Circle_tree_trunk"]
+radius = 6.0
+
+[sub_resource type="RectangleShape2D" id="Rect_prop_small"]
+size = Vector2(14, 14)
+
+[sub_resource type="RectangleShape2D" id="Rect_boundary_h"]
+size = Vector2(800, 20)
+
+[sub_resource type="RectangleShape2D" id="Rect_boundary_v"]
+size = Vector2(20, 600)
+
+[node name="Village" type="Node2D"]
+texture_filter = 1
+y_sort_enabled = true
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.24, 0.27, 0.42, 1)
+
+[node name="Ground" type="Node2D" parent="."]
+script = ExtResource("1_ground")
+
+[node name="WorldBoundaries" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="NorthWall" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(384, -10)
+shape = SubResource("Rect_boundary_h")
+
+[node name="SouthWall" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(384, 586)
+shape = SubResource("Rect_boundary_h")
+
+[node name="WestWall" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(-10, 288)
+shape = SubResource("Rect_boundary_v")
+
+[node name="EastWall" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(778, 288)
+shape = SubResource("Rect_boundary_v")
+
+[node name="WaterBoundaryNorth" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(52, 130)
+shape = SubResource("Rect_boundary_v")
+
+[node name="WaterBoundarySouth" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(52, 450)
+shape = SubResource("Rect_boundary_v")
+
+[node name="SpawnPoint" type="Marker2D" parent="."]
+position = Vector2(110, 296)
+
+[node name="PatrolPoints" type="Node2D" parent="."]
+
+[node name="Point1" type="Marker2D" parent="PatrolPoints"]
+position = Vector2(520, 430)
+
+[node name="Point2" type="Marker2D" parent="PatrolPoints"]
+position = Vector2(510, 145)
+
+[node name="Point3" type="Marker2D" parent="PatrolPoints"]
+position = Vector2(375, 290)
+
+[node name="Point4" type="Marker2D" parent="PatrolPoints"]
+position = Vector2(170, 160)
+
+[node name="Point5" type="Marker2D" parent="PatrolPoints"]
+position = Vector2(320, 440)
+
+[node name="Entities" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="House1" type="StaticBody2D" parent="Entities"]
+position = Vector2(120, 80)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/House1"]
+position = Vector2(48, 40)
+texture = ExtResource("4_house")
+
+[node name="Chimney" type="Sprite2D" parent="Entities/House1"]
+position = Vector2(72, 4)
+texture = ExtResource("5_chimney")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/House1"]
+position = Vector2(48, 64)
+shape = SubResource("Rect_house_footprint")
+
+[node name="House2" type="StaticBody2D" parent="Entities"]
+position = Vector2(570, 220)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/House2"]
+position = Vector2(48, 40)
+texture = ExtResource("4_house")
+
+[node name="Chimney" type="Sprite2D" parent="Entities/House2"]
+position = Vector2(72, 4)
+texture = ExtResource("5_chimney")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/House2"]
+position = Vector2(48, 64)
+shape = SubResource("Rect_house_footprint")
+
+[node name="Chapel" type="StaticBody2D" parent="Entities"]
+position = Vector2(480, 40)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Chapel"]
+position = Vector2(32, 48)
+texture = ExtResource("3_chapel")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Chapel"]
+position = Vector2(32, 80)
+shape = SubResource("Rect_chapel_footprint")
+
+[node name="Well" type="StaticBody2D" parent="Entities"]
+position = Vector2(360, 272)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Well"]
+position = Vector2(16, 16)
+texture = ExtResource("6_well")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Well"]
+position = Vector2(16, 20)
+shape = SubResource("Circle_well")
+
+[node name="LanternWell" type="Node2D" parent="Entities"]
+position = Vector2(346, 256)
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/LanternWell"]
+texture = ExtResource("13_lantern")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 16)
+
+[node name="PointLight2D" type="PointLight2D" parent="Entities/LanternWell"]
+color = Color(1, 0.85, 0.6, 1)
+energy = 1.3
+texture = ExtResource("2_glow")
+texture_scale = 1.8
+
+[node name="LanternChapel" type="Node2D" parent="Entities"]
+position = Vector2(465, 140)
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/LanternChapel"]
+texture = ExtResource("13_lantern")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 16)
+
+[node name="PointLight2D" type="PointLight2D" parent="Entities/LanternChapel"]
+color = Color(1, 0.85, 0.6, 1)
+energy = 1.3
+texture = ExtResource("2_glow")
+texture_scale = 1.8
+
+[node name="LanternCottage" type="Node2D" parent="Entities"]
+position = Vector2(145, 150)
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/LanternCottage"]
+texture = ExtResource("13_lantern")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 16)
+
+[node name="PointLight2D" type="PointLight2D" parent="Entities/LanternCottage"]
+color = Color(1, 0.85, 0.6, 1)
+energy = 1.3
+texture = ExtResource("2_glow")
+texture_scale = 1.8
+
+[node name="LanternGraveyard" type="Node2D" parent="Entities"]
+position = Vector2(430, 360)
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/LanternGraveyard"]
+texture = ExtResource("13_lantern")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 16)
+
+[node name="PointLight2D" type="PointLight2D" parent="Entities/LanternGraveyard"]
+color = Color(1, 0.85, 0.6, 1)
+energy = 1.3
+texture = ExtResource("2_glow")
+texture_scale = 1.8
+
+
+
+[node name="Tree_0" type="StaticBody2D" parent="Entities"]
+position = Vector2(100, 40)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_0"]
+position = Vector2(16, 24)
+texture = ExtResource("7_tree_pine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_0"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_1" type="StaticBody2D" parent="Entities"]
+position = Vector2(240, 50)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_1"]
+position = Vector2(16, 24)
+texture = ExtResource("7_tree_pine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_1"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_2" type="StaticBody2D" parent="Entities"]
+position = Vector2(300, 35)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_2"]
+position = Vector2(16, 24)
+texture = ExtResource("8_tree_dead")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_2"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_3" type="StaticBody2D" parent="Entities"]
+position = Vector2(380, 55)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_3"]
+position = Vector2(16, 24)
+texture = ExtResource("7_tree_pine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_3"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_4" type="StaticBody2D" parent="Entities"]
+position = Vector2(570, 45)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_4"]
+position = Vector2(16, 24)
+texture = ExtResource("8_tree_dead")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_4"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_5" type="StaticBody2D" parent="Entities"]
+position = Vector2(660, 60)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_5"]
+position = Vector2(16, 24)
+texture = ExtResource("7_tree_pine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_5"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_6" type="StaticBody2D" parent="Entities"]
+position = Vector2(710, 140)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_6"]
+position = Vector2(16, 24)
+texture = ExtResource("7_tree_pine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_6"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_7" type="StaticBody2D" parent="Entities"]
+position = Vector2(720, 260)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_7"]
+position = Vector2(16, 24)
+texture = ExtResource("8_tree_dead")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_7"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_8" type="StaticBody2D" parent="Entities"]
+position = Vector2(690, 390)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_8"]
+position = Vector2(16, 24)
+texture = ExtResource("7_tree_pine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_8"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_9" type="StaticBody2D" parent="Entities"]
+position = Vector2(700, 500)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_9"]
+position = Vector2(16, 24)
+texture = ExtResource("7_tree_pine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_9"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_10" type="StaticBody2D" parent="Entities"]
+position = Vector2(600, 510)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_10"]
+position = Vector2(16, 24)
+texture = ExtResource("8_tree_dead")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_10"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_11" type="StaticBody2D" parent="Entities"]
+position = Vector2(490, 520)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_11"]
+position = Vector2(16, 24)
+texture = ExtResource("7_tree_pine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_11"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_12" type="StaticBody2D" parent="Entities"]
+position = Vector2(380, 510)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_12"]
+position = Vector2(16, 24)
+texture = ExtResource("8_tree_dead")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_12"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_13" type="StaticBody2D" parent="Entities"]
+position = Vector2(260, 500)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_13"]
+position = Vector2(16, 24)
+texture = ExtResource("7_tree_pine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_13"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_14" type="StaticBody2D" parent="Entities"]
+position = Vector2(140, 510)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_14"]
+position = Vector2(16, 24)
+texture = ExtResource("8_tree_dead")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_14"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_15" type="StaticBody2D" parent="Entities"]
+position = Vector2(80, 420)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_15"]
+position = Vector2(16, 24)
+texture = ExtResource("7_tree_pine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_15"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_16" type="StaticBody2D" parent="Entities"]
+position = Vector2(90, 200)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_16"]
+position = Vector2(16, 24)
+texture = ExtResource("8_tree_dead")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_16"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_17" type="StaticBody2D" parent="Entities"]
+position = Vector2(280, 210)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_17"]
+position = Vector2(16, 24)
+texture = ExtResource("7_tree_pine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_17"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_18" type="StaticBody2D" parent="Entities"]
+position = Vector2(440, 220)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_18"]
+position = Vector2(16, 24)
+texture = ExtResource("7_tree_pine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_18"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_19" type="StaticBody2D" parent="Entities"]
+position = Vector2(210, 370)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_19"]
+position = Vector2(16, 24)
+texture = ExtResource("8_tree_dead")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_19"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Tree_20" type="StaticBody2D" parent="Entities"]
+position = Vector2(340, 380)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Tree_20"]
+position = Vector2(16, 24)
+texture = ExtResource("7_tree_pine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Tree_20"]
+position = Vector2(16, 43)
+shape = SubResource("Circle_tree_trunk")
+
+[node name="Prop_Barrel1" type="StaticBody2D" parent="Entities"]
+position = Vector2(110, 145)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Prop_Barrel1"]
+position = Vector2(8, 8)
+texture = ExtResource("9_barrels")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Prop_Barrel1"]
+position = Vector2(8, 8)
+shape = SubResource("Rect_prop_small")
+
+[node name="Prop_Barrel2" type="StaticBody2D" parent="Entities"]
+position = Vector2(126, 147)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Prop_Barrel2"]
+position = Vector2(8, 8)
+texture = ExtResource("9_barrels")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Prop_Barrel2"]
+position = Vector2(8, 8)
+shape = SubResource("Rect_prop_small")
+
+[node name="Prop_Barrel3" type="StaticBody2D" parent="Entities"]
+position = Vector2(220, 140)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Prop_Barrel3"]
+position = Vector2(8, 8)
+texture = ExtResource("9_barrels")
+region_enabled = true
+region_rect = Rect2(32, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Prop_Barrel3"]
+position = Vector2(8, 8)
+shape = SubResource("Rect_prop_small")
+
+[node name="Prop_Barrel4" type="StaticBody2D" parent="Entities"]
+position = Vector2(560, 285)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Prop_Barrel4"]
+position = Vector2(8, 8)
+texture = ExtResource("9_barrels")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Prop_Barrel4"]
+position = Vector2(8, 8)
+shape = SubResource("Rect_prop_small")
+
+[node name="Prop_Crate1" type="StaticBody2D" parent="Entities"]
+position = Vector2(205, 146)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Prop_Crate1"]
+position = Vector2(8, 8)
+texture = ExtResource("10_crates")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Prop_Crate1"]
+position = Vector2(8, 8)
+shape = SubResource("Rect_prop_small")
+
+[node name="Prop_Crate2" type="StaticBody2D" parent="Entities"]
+position = Vector2(550, 120)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Prop_Crate2"]
+position = Vector2(8, 8)
+texture = ExtResource("10_crates")
+region_enabled = true
+region_rect = Rect2(32, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Prop_Crate2"]
+position = Vector2(8, 8)
+shape = SubResource("Rect_prop_small")
+
+[node name="Prop_Crate3" type="StaticBody2D" parent="Entities"]
+position = Vector2(578, 287)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Prop_Crate3"]
+position = Vector2(8, 8)
+texture = ExtResource("10_crates")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Prop_Crate3"]
+position = Vector2(8, 8)
+shape = SubResource("Rect_prop_small")
+
+[node name="Prop_Wheel" type="StaticBody2D" parent="Entities"]
+position = Vector2(232, 155)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Prop_Wheel"]
+position = Vector2(8, 8)
+texture = ExtResource("12_props")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Prop_Wheel"]
+position = Vector2(8, 8)
+shape = SubResource("Rect_prop_small")
+
+[node name="Prop_Bucket" type="StaticBody2D" parent="Entities"]
+position = Vector2(345, 290)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Prop_Bucket"]
+position = Vector2(8, 8)
+texture = ExtResource("12_props")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Prop_Bucket"]
+position = Vector2(8, 8)
+shape = SubResource("Rect_prop_small")
+
+[node name="Prop_Bones" type="StaticBody2D" parent="Entities"]
+position = Vector2(535, 140)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Prop_Bones"]
+position = Vector2(8, 8)
+texture = ExtResource("12_props")
+region_enabled = true
+region_rect = Rect2(32, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Prop_Bones"]
+position = Vector2(8, 8)
+shape = SubResource("Rect_prop_small")
+
+[node name="Prop_Candle" type="StaticBody2D" parent="Entities"]
+position = Vector2(495, 135)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Prop_Candle"]
+position = Vector2(8, 8)
+texture = ExtResource("12_props")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Prop_Candle"]
+position = Vector2(8, 8)
+shape = SubResource("Rect_prop_small")
+
+[node name="Grave_Grave1" type="StaticBody2D" parent="Entities"]
+position = Vector2(460, 390)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Grave_Grave1"]
+position = Vector2(8, 12)
+texture = ExtResource("11_graves")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Grave_Grave1"]
+position = Vector2(8, 18)
+shape = SubResource("Rect_prop_small")
+
+[node name="Grave_Grave2" type="StaticBody2D" parent="Entities"]
+position = Vector2(490, 390)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Grave_Grave2"]
+position = Vector2(8, 12)
+texture = ExtResource("11_graves")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Grave_Grave2"]
+position = Vector2(8, 18)
+shape = SubResource("Rect_prop_small")
+
+[node name="Grave_Grave3" type="StaticBody2D" parent="Entities"]
+position = Vector2(520, 390)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Grave_Grave3"]
+position = Vector2(8, 12)
+texture = ExtResource("11_graves")
+region_enabled = true
+region_rect = Rect2(32, 0, 16, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Grave_Grave3"]
+position = Vector2(8, 18)
+shape = SubResource("Rect_prop_small")
+
+[node name="Grave_Grave4" type="StaticBody2D" parent="Entities"]
+position = Vector2(550, 390)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Grave_Grave4"]
+position = Vector2(8, 12)
+texture = ExtResource("11_graves")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Grave_Grave4"]
+position = Vector2(8, 18)
+shape = SubResource("Rect_prop_small")
+
+[node name="Grave_Grave5" type="StaticBody2D" parent="Entities"]
+position = Vector2(460, 430)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Grave_Grave5"]
+position = Vector2(8, 12)
+texture = ExtResource("11_graves")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Grave_Grave5"]
+position = Vector2(8, 18)
+shape = SubResource("Rect_prop_small")
+
+[node name="Grave_Grave6" type="StaticBody2D" parent="Entities"]
+position = Vector2(490, 430)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Grave_Grave6"]
+position = Vector2(8, 12)
+texture = ExtResource("11_graves")
+region_enabled = true
+region_rect = Rect2(32, 0, 16, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Grave_Grave6"]
+position = Vector2(8, 18)
+shape = SubResource("Rect_prop_small")
+
+[node name="Grave_Grave7" type="StaticBody2D" parent="Entities"]
+position = Vector2(520, 430)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Grave_Grave7"]
+position = Vector2(8, 12)
+texture = ExtResource("11_graves")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Grave_Grave7"]
+position = Vector2(8, 18)
+shape = SubResource("Rect_prop_small")
+
+[node name="Grave_Grave8" type="StaticBody2D" parent="Entities"]
+position = Vector2(550, 430)
+collision_layer = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Entities/Grave_Grave8"]
+position = Vector2(8, 12)
+texture = ExtResource("11_graves")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entities/Grave_Grave8"]
+position = Vector2(8, 18)
+shape = SubResource("Rect_prop_small")

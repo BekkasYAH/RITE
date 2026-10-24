@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/ritual_circle.gd" id="1_ritual"]
+[ext_resource type="Texture2D" path="res://assets/props/light_glow_amber.png" id="2_light"]
+[ext_resource type="Texture2D" path="res://assets/ritual/containment_circle_chalk.png" id="3_chalk"]
+[ext_resource type="Texture2D" path="res://assets/ritual/containment_circle_active.png" id="4_active"]
+[ext_resource type="Texture2D" path="res://assets/ritual/iron_nail.png" id="5_nail"]
+[ext_resource type="Texture2D" path="res://assets/ritual/containment_effect.png" id="6_seal"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_trap"]
+radius = 42.0
+
+[node name="RitualCircle" type="Node2D" groups=["ritual_circle"]]
+texture_filter = 1
+script = ExtResource("1_ritual")
+
+[node name="ChalkSprite" type="Sprite2D" parent="."]
+texture = ExtResource("3_chalk")
+
+[node name="ActiveSprite" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("4_active")
+region_enabled = true
+region_rect = Rect2(0, 0, 96, 96)
+
+[node name="NailSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -2)
+texture = ExtResource("5_nail")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="SealEffectSprite" type="Sprite2D" parent="."]
+visible = false
+z_index = 1
+texture = ExtResource("6_seal")
+region_enabled = true
+region_rect = Rect2(0, 0, 96, 96)
+
+[node name="AnchorPoint" type="Marker2D" parent="."]
+
+[node name="TriggerArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea"]
+shape = SubResource("CircleShape2D_trap")
+
+[node name="RuneLight" type="PointLight2D" parent="."]
+color = Color(0.35, 0.85, 1, 1)
+energy = 1.2
+texture = ExtResource("2_light")
+texture_scale = 1.8

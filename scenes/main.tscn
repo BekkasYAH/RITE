@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_main"]
+
+[node name="Main" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_main")
